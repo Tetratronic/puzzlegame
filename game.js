@@ -3,7 +3,7 @@ const cards = document.querySelectorAll('.card');
 let hasFlippedCard = false;
 let firstCard, secondCard;
 let locked = false;
-
+let matchSound = new Audio('./assets/match.mp3');
 let win = 10;
 
 function flipCard(){
@@ -23,7 +23,6 @@ function flipCard(){
 
 function checkMatch(){
     if(firstCard.firstElementChild.src == secondCard.firstElementChild.src){
-        console.log('success');
         disableCards();
         return;
     }
@@ -35,7 +34,13 @@ function disableCards(){
     firstCard.removeEventListener('click', flipCard);
     secondCard.removeEventListener('click', flipCard);
     reset();
+    setTimeout(()=>{
+        matchSound.play();
+    },250)
     win--;
+    setTimeout(()=>{
+        checkWin();
+    },300)
 }
 
 function unflipCards(){
